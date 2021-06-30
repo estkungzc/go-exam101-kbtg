@@ -2,7 +2,6 @@ package employee
 
 import (
 	"context"
-	"errors"
 	"github.com/labstack/gommon/log"
 	"go-exam101-kbtg/go_exam_4/internal"
 	"go-exam101-kbtg/go_exam_4/internal/models"
@@ -10,6 +9,7 @@ import (
 
 type employeeRepo interface {
 	GetEmployeeById(ctx context.Context, empId string) ([]models.Employee, error)
+	GetEmployeeByFirstName(ctx context.Context, firstName string) ([]models.Employee, error)
 }
 
 type Service struct {
@@ -20,17 +20,21 @@ type Service struct {
 func NewService(cv *internal.Configs) *Service {
 	return &Service{
 		cv:   cv,
-		repo: nil,
+		repo: NewRepo(cv),
 	}
 }
 
 func (s Service) GetEmployeeById(c context.Context, employeeId string) ([]models.Employee, error) {
 
-	if len(employeeId) != 10 {
-		return []models.Employee{}, errors.New("employee id length require 10 digits")
-	}
+	//if len(employeeId) != 10 {
+	//	return []models.Employee{}, errors.New("employee id length require 10 digits")
+	//}
 
 	log.Infof("service query: %#v", employeeId)
 
 	return s.repo.GetEmployeeById(c, employeeId)
+}
+
+func (s Service) GetEmployeeByFirstName(c context.Context, firstName string) ([]models.Employee, error) {
+	return s.repo.GetEmployeeByFirstName(c, firstName)
 }

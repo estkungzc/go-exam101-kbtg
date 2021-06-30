@@ -38,6 +38,13 @@ func NewRoutes(e *echo.Echo, cv *internal.Configs) ([]CloseFunc, error) {
 			HandlerFunc:    emp.GetEmployeeById,
 			MiddlewareFunc: nil,
 		},
+		{
+			Group:          "employee",
+			Path:           "/byFirstName",
+			HttpMethod:     http.MethodPost,
+			HandlerFunc:    emp.GetEmployeeByFirstName,
+			MiddlewareFunc: nil,
+		},
 	}
 
 	// http connection

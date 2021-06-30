@@ -1,0 +1,8 @@
+time_zone: "Asia/Bangkok"
+
+mongodb:
+  mongodb_uri: "mongodb+srv://%s:%s@cluster0.5m0mj.mongodb.net/%s?retryWrites=true&w=majority"
+  username: "teerapat"
+  password: "HDrLv7gRVMJ8BJaX"
+  database: "sample_employee"
+  timeout: "5s"

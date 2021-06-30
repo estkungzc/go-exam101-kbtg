@@ -17,7 +17,7 @@ type Repo struct {
 func NewRepo(cv *internal.Configs) *Repo {
 	return &Repo{
 		cv:   cv,
-		repo: nil,
+		repo: cv.MongoDB.Client.Database(cv.MongoDB.Database),
 	}
 }
 
@@ -25,6 +25,24 @@ func (r Repo) GetEmployeeById(ctx context.Context, employeeId string) ([]models.
 
 	filter := bson.M{
 		"emp_id": employeeId,
+	}
+
+	coll := r.repo.Collection("sample_employee")
+	cur, err := coll.Find(ctx, filter, options.Find().SetLimit(10))
+	if err != nil {
+		return nil, err
+	}
+
+	var rtn []models.Employee
+	if err := cur.All(ctx, &rtn); err != nil {
+		return nil, err
+	}
+	return rtn, nil
+}
+
+func (r Repo) GetEmployeeByFirstName(ctx context.Context, firstName string) ([]models.Employee, error) {
+	filter := bson.M{
+		"first_name": firstName,
 	}
 
 	coll := r.repo.Collection("sample_employee")

@@ -2,6 +2,7 @@ package main
 
 import (
 	"context"
+	"flag"
 	"fmt"
 	"go-exam101-kbtg/go_exam_4/internal"
 	"go-exam101-kbtg/go_exam_4/internal/handler"
@@ -17,6 +18,10 @@ func main() {
 	//service := os.Getenv("SERVICE")
 	port := os.Getenv("PORT")
 	state := os.Getenv("STATE")
+
+	//env := flag.String("env", "local", "environment")
+
+	flag.Parse()
 
 	cv := internal.Configs{ConfigPath: os.Getenv("CONFIG_PATH")}
 
