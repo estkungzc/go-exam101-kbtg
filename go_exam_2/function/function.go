@@ -7,17 +7,22 @@ import (
 	"strings"
 )
 
-func ValidateThailandCitizenID(idNo string) error {
-
+func ValidateThailandIDLength(idNo string) error {
 	if len(idNo) != 13 {
 		return errors.New("thai citizen no is not 13 digits")
 	}
+	return nil
+}
 
+func ValidateThailandIDNumericOnly(idNo string) error {
 	_, err := strconv.Atoi(idNo)
 	if err != nil {
 		return errors.New("thai citizen no must be numeric only")
 	}
+	return nil
+}
 
+func ValidateThailandIDPattern(idNo string) error {
 	idNoSp := idNo[:12]
 	//fmt.Println("idNoSp :", idNoSp)
 
@@ -55,5 +60,18 @@ func ValidateThailandCitizenID(idNo string) error {
 		return errors.New("thai citizen id mismatch")
 	}
 
+	return nil
+}
+
+func ValidateThailandCitizenID(idNo string) error {
+	if err := ValidateThailandIDLength(idNo); err != nil {
+		return err
+	}
+	if err := ValidateThailandIDNumericOnly(idNo); err != nil {
+		return err
+	}
+	if err := ValidateThailandIDPattern(idNo); err != nil {
+		return err
+	}
 	return nil
 }
