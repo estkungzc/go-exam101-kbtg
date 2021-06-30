@@ -10,8 +10,6 @@ func main() {
 	idRange := flag.Int("id_range", 0, "range id to call api")
 	empId := flag.String("employee_id", "", "employee id")
 
-	routines := flag.Int("routines", 10, "routines threads")
-
 	flag.Parse()
 
 	if *idRange <= 0 || *idRange >= 250 {
@@ -22,12 +20,7 @@ func main() {
 		panic(fmt.Errorf("employee_id is required"))
 	}
 
-	if *routines <= 0 || *routines > 50 {
-		*routines = 10
-	}
-
 	pipelineOut := make(chan Photo)
-
 	defer close(pipelineOut)
 
 	var wg sync.WaitGroup
